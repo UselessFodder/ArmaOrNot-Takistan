@@ -1,0 +1,79 @@
+[[getMarkerPos "op1_insert"], "infilTransport.sqf"] remoteExec ["execVM",2];
+_target setFuel 0.01;
+_target engineOn true;
+
+
+this addAction ["Prepare for Lalezar Oilfields...", {
+ 
+ titleText ["Insert via the convoy", "PLAIN", 2];
+  removeAllActions leadVic;
+  removeAllActions insertHeli;
+  leadVic addAction ["Mission Infil...", {
+  [[getMarkerPos "op1_insert"], "infilTransport.sqf"] remoteExec ["execVM",0]; 
+  leadVic setFuel 0.01; 
+  leadVic engineOn true;
+  opVic1 setFuel 0.01; 
+  opVic1 engineOn true;
+  opVic2 setFuel 0.01; 
+  opVic2 engineOn true;
+  opVic3 setFuel 0.01; 
+  opVic4 engineOn true;
+
+  }, nil, 1.5, true, true, "", "MissionObjectives select 0 == false", 5];
+
+}];
+
+this addAction ["Prepare for Zavarak Village...", {
+  titleText ["Insert via the blackhawk", "PLAIN", 2];
+  removeAllActions insertHeli;
+  removeAllActions leadVic;
+  insertHeli addAction ["Mission Infil...", {
+  [[getMarkerPos "op2_insert"], "infilTransport.sqf"] remoteExec ["execVM",0]; 
+  [[getMarkerPos "op2_insert"], "infilHelicopter.sqf"] remoteExec ["execVM",2]; 
+  insertHeli setFuel 0.01; 
+  insertHeli engineOn true;
+
+  }, nil, 1.5, true, true, "", "MissionObjectives select 1 == false", 5];
+
+}];
+
+this addAction ["Prepare for Garmsar Training Camp...", {
+  titleText ["Insert via the blackhawk", "PLAIN", 2];
+  removeAllActions insertHeli;
+  removeAllActions leadVic;
+  insertHeli addAction ["Mission Infil...", {
+  [[getMarkerPos "op3_insert"], "infilTransport.sqf"] remoteExec ["execVM",0]; 
+  [[getMarkerPos "op3_insert"], "infilHelicopter.sqf"] remoteExec ["execVM",2]; 
+  insertHeli setFuel 0.01; 
+  insertHeli engineOn true;
+
+  }, nil, 1.5, true, true, "", "MissionObjectives select 2 == false", 5];
+
+}];
+
+  _spawnHeli = [[getMarkerPos "op2_insert" select 0, getMarkerPos "op2_insert" select 1, 10], WEST, ["CUP_B_UH60M_US"],[],[],[],[],[],270] call BIS_fnc_spawnGroup;
+  _wp =_spawnHeli addWaypoint [(getPos insertHeli), 0];
+  _wp setWaypointType "MOVE";
+
+  //[[getMarkerPos "op2_insert" select 0, getMarkerPos "op2_insert" select 1, 10], 270, "CUP_B_UH60M_US", west] call BIS_fnc_spawnVehicle
+  
+  params ["_location"];
+   _spawnHeli = [[getPos _location select 0, getPos _location select 1, 10], WEST, ["CUP_B_UH60M_US"],[],[],[],[],[],270] call BIS_fnc_spawnGroup;
+   _spawnHeli = createVehicle ["CUP_B_UH60M_US",[getPos _location select 0, getPos _location select 1, 10], [],0,"FLY"];
+   _spawnHeli flyInHeight 10;
+   _spawnHeli setdir 270;
+   createVehicleCrew _spawnHeli;
+  _wp = group _spawnHeli addWaypoint [(getPos insertHeli), 0];
+  _wp setWaypointType "MOVE";
+  
+  sleep 60;
+  deleteVehicle _spawnHeli;
+  
+  
+_theSound = selectRandom["stick1.ogg", "stick2.ogg", "stick3.ogg", "zombie1.ogg", "zombie2.ogg", "zombie3.ogg", "gross1.ogg", "brush1.ogg"];
+playSound3D [getMissionPath _theSound, thisTrigger];
+
+
+
+playSound ambiance
+[ambiance] remoteExec ["playSound"];

@@ -1,0 +1,40 @@
+respawnOnStart = -1;
+
+class CfgSounds
+{
+	sounds[] = {};
+	class reassure1
+	{
+		// how the sound is referred to in the editor (e.g. trigger effects)
+		name = "reassure";
+
+		// filename, volume, pitch, distance (optional)
+		sound[] = { "reassure.ogg", 5, 1, 100 };
+
+		// subtitle delay in seconds, subtitle text
+		titles[] = { 0, "Soldier: Oh man, am I glad to see you guys." };
+	};
+	class withYou1
+	{
+		// how the sound is referred to in the editor (e.g. trigger effects)
+		name = "withyou";
+
+		// filename, volume, pitch, distance (optional)
+		sound[] = { "withyou.ogg", 5, 0.9, 100 };
+
+		// subtitle delay in seconds, subtitle text
+		titles[] = { 0, "Soldier: Sounds good, I'm coming with you." };
+	};
+	class yeahOkay1
+	{
+		// how the sound is referred to in the editor (e.g. trigger effects)
+		name = "yeahOkay";
+
+		// filename, volume, pitch, distance (optional)
+		sound[] = { "yeahokay.ogg", 5, 1.1, 100 };
+
+		// subtitle delay in seconds, subtitle text
+		titles[] = { 0, "Pilot: Yeah, okay." };
+	};
+	
+};
